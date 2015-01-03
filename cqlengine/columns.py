@@ -343,7 +343,7 @@ class DateTime(Column):
         try:
             return datetime.utcfromtimestamp(value)
         except TypeError:
-            return datetime.utcfromtimestamp(DateType.deserialize(value, protocol_version))
+            return datetime.utcfromtimestamp(DateType.deserialize(value, self.protocol_version))
 
     def to_database(self, value):
         value = super(DateTime, self).to_database(value)
@@ -371,7 +371,7 @@ class Date(Column):
         try:
             return datetime.utcfromtimestamp(value).date()
         except TypeError:
-            return datetime.utcfromtimestamp(DateType.deserialize(value, protocol_version)).date()
+            return datetime.utcfromtimestamp(DateType.deserialize(value, self.protocol_version)).date()
 
     def to_database(self, value):
         value = super(Date, self).to_database(value)
