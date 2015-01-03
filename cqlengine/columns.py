@@ -88,6 +88,7 @@ class Column(object):
     #the cassandra type this column maps to
     db_type = None
     value_manager = BaseValueManager
+    protocol_version = 3
 
     instance_counter = 0
 
@@ -342,7 +343,7 @@ class DateTime(Column):
         try:
             return datetime.utcfromtimestamp(value)
         except TypeError:
-            return datetime.utcfromtimestamp(DateType.deserialize(value))
+            return datetime.utcfromtimestamp(DateType.deserialize(value, protocol_version))
 
     def to_database(self, value):
         value = super(DateTime, self).to_database(value)
@@ -370,7 +371,7 @@ class Date(Column):
         try:
             return datetime.utcfromtimestamp(value).date()
         except TypeError:
-            return datetime.utcfromtimestamp(DateType.deserialize(value)).date()
+            return datetime.utcfromtimestamp(DateType.deserialize(value, protocol_version)).date()
 
     def to_database(self, value):
         value = super(Date, self).to_database(value)
